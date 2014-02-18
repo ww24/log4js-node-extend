@@ -57,4 +57,12 @@ describe("Logging", function () {
     log.info("test");
     expect(result).to.equal("test at <anonymous> (" + path.relative(__dirname, __filename) + ":57:9)");
   });
+
+  it("No Options", function () {
+    log4js_extend(log4js);
+    var log = log4js.getLogger("category");
+
+    log.info("test");
+    expect(result).to.equal("test at <anonymous> (" + __filename + ":65:9)");
+  });
 });

@@ -35,8 +35,12 @@ Options
 ### path
 ログに出力するファイル名を指定したパスからの相対パスで表示します。
 
+default: `null`
+
 ### format
 ログに付加する書式を指定します。
+
+default: `"at @name (@file:@line:@column)"`
 
 #### 下記 4 つは出力時にそれぞれ置換されます。
 * @name : 関数名

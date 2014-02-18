@@ -1,6 +1,6 @@
 {
   "name": "log4js-extend",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "log4js + line number",
   "main": "log4js-extend.js",
   "scripts": {

@@ -54,11 +54,13 @@ exports = module.exports = function (log4js, options) {
   extended || extend(log4js);
   extended = true;
 
-  options.format && (exports.format = options.format);
+  // init
+  exports.path = null;
+  exports.format = "at @name (@file:@line:@column)";
+
+  options || (options = {});
   options.path && (exports.path = options.path);
+  options.format && (exports.format = options.format);
 
   return log4js;
 };
-
-exports.path = null;
-exports.format = "at @name (@file:@line:@column)";
