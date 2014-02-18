@@ -1,0 +1,29 @@
+{
+  "name": "log4js-extend",
+  "version": "0.1.0",
+  "description": "log4js + line number",
+  "main": "log4js-extend.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ww24/log4js-node-extend"
+  },
+  "keywords": [
+    "logging",
+    "log",
+    "log4js"
+  ],
+  "author": "ww24",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/ww24/log4js-node-extend/issues"
+  },
+  "homepage": "https://github.com/ww24/log4js-node-extend",
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "log4js": "~0.6.10",
+    "mocha": "~1.17.1"
+  }
+}
