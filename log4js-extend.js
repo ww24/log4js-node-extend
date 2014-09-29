@@ -40,8 +40,13 @@ function getTrace(caller) {
 
 // format trace
 function formatter(trace) {
-  // absolute path -> relative path
-  exports.path && (trace.file = path.relative(exports.path, trace.file));
+  if (trace.file) {
+    // absolute path -> relative path
+    exports.path && (trace.file = path.relative(exports.path, trace.file));
+  } else {
+    trace.file = "";
+  }
+
   return exports.format
     .split("@name").join(trace.name)
     .split("@file").join(trace.file)
