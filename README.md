@@ -1,7 +1,7 @@
 log4js-node-extend [![Build Status](https://secure.travis-ci.org/ww24/log4js-node-extend.png?branch=master)](http://travis-ci.org/ww24/log4js-node-extend) [![Dependency Status](https://gemnasium.com/ww24/log4js-node-extend.png)](https://gemnasium.com/ww24/log4js-node-extend)
 ==================
 
-`log4js-node` のログ出力にファイル名、関数名、行番号、列番号を付加します。
+It add useful meta data of code (file-name, function-name line-number, column-number) for `log4js-node`.
 
 Example
 ---------
@@ -33,20 +33,20 @@ logger.info("test");
 Options
 ---------
 ### path
-ログに出力するファイル名を指定したパスからの相対パスで表示します。
+Use relative path from path directory.
 
 default: `null`
 
 ### format
-ログに付加する書式を指定します。
+Simple log format.
 
 default: `"at @name (@file:@line:@column)"`
 
-#### 下記 4 つは出力時にそれぞれ置換されます。
-* @name : 関数名
-* @file : ファイル名
-* @line : 行番号
-* @column : 列番号
+#### Keywords will replace as below.
+* @name : function name
+* @file : file name
+* @line : line number
+* @column : column number
 
 License
 ---------
