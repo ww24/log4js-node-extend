@@ -1,77 +1,96 @@
-var expect = require("chai").expect,
-    log4js = require("log4js"),
-    log4js_extend = require("./log4js-extend"),
-    path = require("path"),
-    vm = require("vm");
+const expect = require("chai").expect;
+const log4js = require("log4js");
+const log4js_extend = require("./log4js-extend");
+const recording = require('./node_modules/log4js/lib/appenders/recording');
+const path = require("path");
+const vm = require("vm");
 
-log4js_extend(log4js, {
-  path: null,
-  format: "at @name (@file:@line:@column)"
-});
-
-describe("Logging", function () {
-  var result = [];
-
-  before(function () {
+describe("Logging", () => {
+  before(() => {
     log4js.configure({
-      adapters: []
+      appenders: { vcr: { type: "recording" } },
+      categories: { default: { appenders: ['vcr'], level: 'info' } }
     });
-    log4js.addAppender(function () {
-      result = arguments[0].data.join(" ");
+
+    log4js_extend(log4js, {
+      path: null,
+      format: "at @name (@file:@line:@column)"
     });
+  });
+
+  afterEach(() => {
+    recording.erase();
   });
 
   it("No Scope", function () {
-    var log = log4js.getLogger("category");
+    const logger = log4js.getLogger();
 
-    log.info("test");
-    expect(result).to.equal("test at <anonymous> (" + __filename + ":27:9)");
+    logger.info("test");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at <anonymous> (" + __filename + ":28:12)");
   });
 
   it("In Scope", function () {
-    var log = log4js.getLogger("category");
+    const logger = log4js.getLogger();
 
     !function scope() {
-      log.info("test");
+      logger.info("test");
     }();
-    expect(result).to.equal("test at scope (" + __filename + ":35:11)");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at scope (" + __filename + ":39:14)");
   });
 
   it("In Object", function () {
-    var log = log4js.getLogger("category");
+    const logger = log4js.getLogger();
 
     !{
       method: function scope() {
-        log.info("test");
+        logger.info("test");
       }
     }.method();
-    expect(result).to.equal("test at method (" + __filename + ":45:13)");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at method (" + __filename + ":52:16)");
   });
 
   it("Relative Path", function () {
     log4js_extend(log4js, {
       path: __dirname
     });
-    var log = log4js.getLogger("category");
+    const logger = log4js.getLogger();
 
-    log.info("test");
-    expect(result).to.equal("test at <anonymous> (" + path.relative(__dirname, __filename) + ":57:9)");
+    logger.info("test");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at <anonymous> (" + path.relative(__dirname, __filename) + ":67:12)");
   });
 
   it("No Options", function () {
     log4js_extend(log4js);
-    var log = log4js.getLogger("category");
+    const logger = log4js.getLogger();
 
-    log.info("test");
-    expect(result).to.equal("test at <anonymous> (" + __filename + ":65:9)");
+    logger.info("test");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at <anonymous> (" + __filename + ":78:12)");
   });
 
   it("trace.file empty", function () {
     log4js_extend(log4js);
-    var log = log4js.getLogger("category");
+    var logger = log4js.getLogger();
 
-    var ctx = vm.createContext({log: log});
-    vm.runInContext("log.info(\"test\")", ctx, "");
-    expect(result).to.equal("test at <anonymous> (:1:5)");
+    var ctx = vm.createContext({logger: logger});
+    vm.runInContext("logger.info(\"test\")", ctx, "");
+
+    const events = recording.replay();
+    const result = events[0].data.join(" ");
+    expect(result).to.equal("test at <anonymous> (:1:8)");
   });
 });

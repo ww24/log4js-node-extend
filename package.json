@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/ww24/log4js-node-extend",
   "devDependencies": {
-    "chai": "~1.9.0",
-    "log4js": "~0.6.10",
-    "mocha": "~1.17.1"
+    "chai": "~4.1.1",
+    "log4js": "~2.3.3",
+    "mocha": "~3.5.0"
   }
 }
