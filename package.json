@@ -1,6 +1,6 @@
 {
   "name": "log4js-extend",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "log4js + line number",
   "main": "log4js-extend.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "log4js"
   ],
   "author": "ww24",
-  "license": "Apache License, Version 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ww24/log4js-node-extend/issues"
   },
